@@ -25,5 +25,8 @@
   ],
   "author": "machinechat.io",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "moment-timezone": "0.5.34",
+    "mustache": "4.2.0"
+  }
 }
