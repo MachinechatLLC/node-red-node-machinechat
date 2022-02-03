@@ -39,7 +39,7 @@
         "inputHostURL": "localhost",
         "inputPort": "8100",
         "inputTargetID": "http-node-red",
-        "inputDateTime": "",
+        "inputDateTime": "{{payload.dt}}",
         "field": "payload",
         "fieldType": "msg",
         "format": "handlebars",
@@ -79,7 +79,7 @@
         "method": "GET",
         "ret": "obj",
         "paytoqs": "ignore",
-        "url": "api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}",
+        "url": "api.openweathermap.org/data/2.5/weather?q={city name}&units=imperial&appid={API key}",
         "tls": "",
         "persist": false,
         "proxy": "",
@@ -92,6 +92,6 @@
                 "0f357b467873f352"
             ]
         ],
-        "info": "Built-in API request by city name\n\nYou can call by city name or city name, state code and country code. Please note that searching by states available only for the USA locations.\n\nAPI call\n\napi.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}\n\n[https://openweathermap.org/current#geocoding](https://openweathermap.org/current#geocoding)"
+        "info": "Built-in API request by city name\n\nYou can call by city name or city name, state code and country code. Please note that searching by states available only for the USA locations.\n\nAPI call\n\n`api.openweathermap.org/data/2.5/weather?q={city name}&units=imperial&appid={API key}`\n\n[https://openweathermap.org/current#geocoding](https://openweathermap.org/current#geocoding)\n\nUnits of measurement\n\nParameters\n\nunits optional standard, metric, imperial. When you do not use the units parameter, format is standard by default.\n\n[https://openweathermap.org/current#data](https://openweathermap.org/current#data)"
     }
 ]
