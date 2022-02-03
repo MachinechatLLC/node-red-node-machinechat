@@ -1,8 +1,80 @@
 [
     {
-        "id": "55dfd8d47711d043",
+        "id": "ffa26f5702ea857f",
+        "type": "tab",
+        "label": "JEDI HTTP Data",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "aba423088d0753fe",
+        "type": "inject",
+        "z": "ffa26f5702ea857f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "1800",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 240,
+        "wires": [
+            [
+                "8f9f1bb00b9a3fef"
+            ]
+        ]
+    },
+    {
+        "id": "0f357b467873f352",
+        "type": "machinechat-jedi-connector",
+        "z": "ffa26f5702ea857f",
+        "inputHostURL": "localhost",
+        "inputPort": "8100",
+        "inputTargetID": "http-node-red",
+        "inputDateTime": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\n  \"temperature\": {{payload.main.temp}},\n  \"pressure\": {{payload.main.pressure}},\n  \"weather_location\": \"{{payload.name}}\"\n}",
+        "output": "json",
+        "x": 690,
+        "y": 240,
+        "wires": [
+            [
+                "8257218d08520a2e"
+            ]
+        ]
+    },
+    {
+        "id": "8257218d08520a2e",
+        "type": "debug",
+        "z": "ffa26f5702ea857f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 930,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "8f9f1bb00b9a3fef",
         "type": "http request",
-        "z": "e114ea646aa1bdeb",
+        "z": "ffa26f5702ea857f",
         "name": "Open Weather Map API",
         "method": "GET",
         "ret": "obj",
@@ -13,12 +85,11 @@
         "proxy": "",
         "authType": "",
         "senderr": false,
-        "x": 490,
+        "x": 390,
         "y": 240,
         "wires": [
             [
-                "8c1dd8a47a2683e8",
-                "7e2dc750ebc4f53b"
+                "0f357b467873f352"
             ]
         ],
         "info": "Built-in API request by city name\n\nYou can call by city name or city name, state code and country code. Please note that searching by states available only for the USA locations.\n\nAPI call\n\napi.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}\n\n[https://openweathermap.org/current#geocoding](https://openweathermap.org/current#geocoding)"

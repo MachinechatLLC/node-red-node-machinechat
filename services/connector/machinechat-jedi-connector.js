@@ -244,7 +244,7 @@ module.exports = function (RED) {
       // check the value for a Date Time format
       if (isUnixTime) {
         checkDateTime = moment.unix(dataTime).format();
-        node.isDateTime = checkDateTime.isValid();
+        node.isDateTime = checkDateTime
       } else {
         checkDateTime = moment(dataTime, "YYYY-MM-DDTHH:mm:ssZZ");
         node.isDateTime = checkDateTime.isValid();
