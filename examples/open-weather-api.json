@@ -11,7 +11,7 @@
         "id": "aba423088d0753fe",
         "type": "inject",
         "z": "ffa26f5702ea857f",
-        "name": "",
+        "name": "Run API request every 30 min",
         "props": [
             {
                 "p": "payload"
@@ -46,7 +46,7 @@
         "syntax": "mustache",
         "template": "{\n  \"temperature\": {{payload.main.temp}},\n  \"pressure\": {{payload.main.pressure}},\n  \"weather_location\": \"{{payload.name}}\"\n}",
         "output": "json",
-        "x": 690,
+        "x": 750,
         "y": 240,
         "wires": [
             [
@@ -67,7 +67,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 930,
+        "x": 1010,
         "y": 240,
         "wires": []
     },
@@ -85,7 +85,7 @@
         "proxy": "",
         "authType": "",
         "senderr": false,
-        "x": 390,
+        "x": 450,
         "y": 240,
         "wires": [
             [

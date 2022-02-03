@@ -5,7 +5,7 @@ Machinechat JEDI connector enables you to easily add enterprise-grade data dashb
 ### Manual install with npm
 
 ```sh
-cd ~./node-red
+cd ~/.node-red
 npm install @machinechat/node-red-node-machinechat
 ```
 
