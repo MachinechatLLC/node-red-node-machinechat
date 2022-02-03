@@ -1,6 +1,6 @@
 {
   "name": "@machinechat/node-red-node-machinechat",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Machinechat JEDI connector enables you to easily add enterprise-grade data dashboards data storage, rules and multi-user web-based interface to any  Node-RED project. Machinechat JEDI runs locally on Microsoft Windows,  Raspberry Pi OS, Linux and Apple macOS.",
   "node-red": {
     "nodes": {
