@@ -21,7 +21,8 @@
     "RBE",
     "Storage",
     "Report",
-    "Notification"
+    "Notification",
+    "node-red"
   ],
   "author": "machinechat.io",
   "license": "MIT",
