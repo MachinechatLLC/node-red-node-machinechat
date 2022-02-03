@@ -4,7 +4,6 @@ var moment = require("moment");
 module.exports = function (RED) {
   "use strict";
   var mustache = require("mustache");
-  var yaml = require("js-yaml");
 
   function extractTokens(tokens, set) {
     set = set || new Set();
@@ -138,10 +137,6 @@ module.exports = function (RED) {
       /* istanbul ignore else  */
       if (node.outputFormat === "json") {
         value = JSON.parse(value);
-      }
-      /* istanbul ignore else  */
-      if (node.outputFormat === "yaml") {
-        value = yaml.load(value);
       }
 
       if (node.fieldType === "msg") {
