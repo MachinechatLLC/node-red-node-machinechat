@@ -1,5 +1,5 @@
 const http = require("http");
-var moment = require('moment');
+var moment = require("moment");
 
 module.exports = function (RED) {
   "use strict";
@@ -96,12 +96,12 @@ module.exports = function (RED) {
 
   function isJson(str) {
     try {
-        JSON.parse(str);
+      JSON.parse(str);
     } catch (e) {
-        return false;
+      return false;
     }
     return true;
-}
+  }
 
   function machinechatJediCollect(config) {
     RED.nodes.createNode(this, config);
@@ -146,14 +146,15 @@ module.exports = function (RED) {
 
       if (node.fieldType === "msg") {
         // MachineChat JEDI HTTP Data Collector payload data Object for timestamp and without timestamp
-        if(node.setDateTime === ''){
+
+        if (node.getDateTime === "") {
           data = JSON.stringify({
             context: {
               target_id: node.machinechatJediTargetID
             },
             data: payload,
           });
-        }else{
+        } else {
           data = JSON.stringify({
             context: {
               target_id: node.machinechatJediTargetID,
@@ -162,7 +163,7 @@ module.exports = function (RED) {
             data: payload,
           });
         }
-        
+
         // http config setup for MachineChat JEDI HTTP Data Collector
         httpConfig = {
           hostname: node.machinechatJediHostURL,
@@ -176,12 +177,15 @@ module.exports = function (RED) {
         };
 
         req = http.request(httpConfig, (res) => {
-
           res.setEncoding("utf8");
           res.on("data", (chunk) => {
             // node.log(`BODY: ${chunk}`);
             // If we make it this far, we'll update status
-              node.status({ fill: res.statusCode === 200 ? "green" : "red" , shape: "dot", text: chunk });
+            node.status({
+              fill: res.statusCode === 200 ? "green" : "red",
+              shape: "dot",
+              text: chunk,
+            });
           });
           res.on("end", () => {
             // node.log("No more data in response.");
@@ -216,9 +220,8 @@ module.exports = function (RED) {
     }
 
     node.on("input", function (msg, send, done) {
-      
       // check if payload is JSON and parse
-      if (isJson(msg.payload)){
+      if (isJson(msg.payload)) {
         msg.payload = JSON.parse(msg.payload);
       }
 
@@ -233,23 +236,42 @@ module.exports = function (RED) {
         node.getDateTime,
         new NodeContext(msg, node.context(), null, is_json, resolvedTokens)
       );
+
+      // check the input Data Time is unix
+      var isUnixTime = moment(dataTime, "X", true).isValid();
+      var checkDateTime = "";
       
       // check the value for a Date Time format
-      var checkDateTime = moment(dataTime, "YYYY-MM-DDTHH:mm:ssZZ");
-      node.isDateTime = checkDateTime.isValid()
-
-      if(node.isDateTime){
-        // Set ISO format (ISO 8601)
-        // Format date to Time Zone : 2021-04-14T02:22:33-0700 
-        let d = moment(dataTime)
-        let format = moment(d).format()
-        node.setDateTime = format
-      }else{
-        // error path stop execution
-        node.status({ fill: "red", shape: "dot", text: 'Invalid date time or timestamp value' });
-        return
+      if (isUnixTime) {
+        checkDateTime = moment.unix(dataTime).format();
+        node.isDateTime = isUnixTime.isValid();
+      } else {
+        checkDateTime = moment(dataTime, "YYYY-MM-DDTHH:mm:ssZZ");
+        node.isDateTime = checkDateTime.isValid();
       }
-      
+
+      if (node.getDateTime !== "") {
+        if (node.isDateTime) {
+          // Set ISO format (ISO 8601)
+          // Format date to Time Zone : 2021-04-14T02:22:33-0700
+          if (isUnixTime) {
+            node.setDateTime = checkDateTime;
+          } else {
+            var d = moment(dataTime);
+            var format = moment(d).format();
+            node.setDateTime = format;
+          }
+        } else {
+          // error path stop execution
+          node.status({
+            fill: "red",
+            shape: "dot",
+            text: "Invalid date time or timestamp value",
+          });
+          return;
+        }
+      }
+
       try {
         /***
          * Allow template contents to be defined externally
